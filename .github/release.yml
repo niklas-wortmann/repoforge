@@ -1,0 +1,26 @@
+changelog:
+  exclude:
+    authors:
+      - github-actions[bot]
+      - dependabot[bot]
+  categories:
+    - title: Features
+      labels:
+        - feat
+        - feature
+    - title: Fixes
+      labels:
+        - fix
+        - bug
+        - bugfix
+    - title: Documentation
+      labels:
+        - docs
+    - title: Maintenance
+      labels:
+        - chore
+        - ci
+        - dependencies
+    - title: Other Changes
+      labels:
+        - "*"

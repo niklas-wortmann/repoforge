@@ -52,6 +52,49 @@ npm install -g repoatlas
 
 Product and implementation docs live in [`docs/README.md`](docs/README.md), with the main specs in [`docs/PRD.md`](docs/PRD.md) and [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
+## Release
+
+RepoAtlas uses a tag-driven release flow built around `bumpp`, `changelogen`, and GitHub Actions.
+
+```bash
+pnpm install
+pnpm release patch
+```
+
+`pnpm release <patch|minor|major|prepatch|preminor|premajor|prerelease>` bumps `package.json`, regenerates `CHANGELOG.md`, creates a `chore: release vX.Y.Z` commit, tags it as `vX.Y.Z`, and pushes `main` plus the tag.
+
+When that tag lands on GitHub, [`.github/workflows/release.yml`](.github/workflows/release.yml) verifies the package, publishes it to npm, and creates a GitHub release with generated release notes. GitHub's release notes include contributor credits automatically, and `CHANGELOG.md` stays conventional-commit based for the repository itself.
+
+Use conventional commit messages if you want clean changelog sections. The changelog generator groups entries by commit type.
+
+### npm Setup
+
+Preferred: configure npm trusted publishing for the `niklas-wortmann/repoatlas` package against `.github/workflows/release.yml`.
+
+Fallback: add an `NPM_TOKEN` repository secret and the same workflow will publish with that token instead.
+
+## Semantic Commits
+
+This repository uses semantic commit messages and enforces them with both a local `commit-msg` hook and GitHub Actions.
+
+Valid formats:
+
+```text
+feat(cli): add graph command scaffold
+fix: handle empty repositories
+docs(readme): document release flow
+chore: release v0.1.1
+```
+
+Rules:
+
+- Use one of `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, or `revert`
+- Keep the subject lowercase and imperative
+- Omit the scope when no single area is dominant
+- Do not end the subject with a period
+
+Local installs configure `core.hooksPath` to use [`.githooks/commit-msg`](.githooks/commit-msg). To validate an existing range manually, run `pnpm commit:check -- HEAD~3..HEAD`.
+
 ## Commands
 
 ### `repoatlas init`

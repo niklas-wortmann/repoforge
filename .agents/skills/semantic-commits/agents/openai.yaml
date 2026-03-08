@@ -1,0 +1,4 @@
+interface:
+  display_name: "Semantic Commits"
+  short_description: "Default semantic commit workflow"
+  default_prompt: "Use $semantic-commits to write or validate conventional commit messages for this repository."

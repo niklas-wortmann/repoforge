@@ -19,6 +19,7 @@ pnpm build            # Build with tsup
 pnpm test             # Run tests with vitest
 pnpm dev              # Run CLI in development mode (tsx)
 pnpm lint             # Run eslint
+pnpm commit:check -- <range>   # Validate commit messages for a git range
 ```
 
 ## Architecture
@@ -54,6 +55,9 @@ See `docs/PRD.md` for product requirements and feature specifications.
 - Never require an API key or network access for local analysis. The GitHub remote scanner is the only feature that makes network requests.
 - Use `web-tree-sitter` (WASM), not native tree-sitter bindings. Zero native compilation dependencies.
 - Errors in individual files should be caught and skipped with a warning, never crash the entire analysis.
+- When creating or suggesting commits, apply the repository's semantic-commit workflow by default. Format commits as `type(scope): summary` or `type: summary`, with lowercase imperative subjects and no trailing period.
+- Valid commit types are `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, and `revert`. Use `chore: release vX.Y.Z` for release commits.
+- Read `.agents/skills/semantic-commits/SKILL.md` before creating or validating commits in this repository.
 
 ## Testing
 
